@@ -1,0 +1,48 @@
+def main(z, q):
+  '''Работает только для 3х фаз'''
+
+  phase_dict = {
+    'A':[0,60],
+    'Z':[60,120],
+    'B':[120,180],
+    'X':[180,240],
+    'C':[240,300],
+    'Y':[300,360]
+  }
+
+  phase_part = {
+      'A':'X',
+      'X':'A',
+      'Z':'C',
+      'C':'Z',
+      'B':'Y',
+      'Y':'B'
+  }
+
+  step_angle = 60/q
+  step = 0
+  phase_ar = ['A']
+  full_name_ar = []
+
+  for i in range(z-1):
+
+    step += step_angle
+
+    if step >= 360:
+      step -=360
+
+    for d, key_d in enumerate(phase_dict):
+      start_val = phase_dict[key_d][0]
+      end_val = phase_dict[key_d][1]
+
+      if start_val <= step < end_val:
+        phase_ar.append(key_d)
+
+  for i in phase_ar:
+    sec_name = phase_part[i]
+    full_name_ar.append(i+'-'+sec_name)
+
+  print(f'Разложить фазы таким образом:\n{full_name_ar}')
+
+main(z=36, q=2/7)
+
